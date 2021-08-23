@@ -65,6 +65,28 @@ class Node:
 
         return sum_tree
 
+# tough to understand delete node in BST
+    def delete(self, val):
+        if val < self.data:
+            if self.left:
+                self.left = self.left.delete(val)
+        elif val > self.data:
+            if self.right:
+                self.right = self.right.delete(val)
+        else:
+            if self.left is None and self.right is None:
+                return None
+            elif self.left is None:
+                return self.right
+            elif self.right is None:
+                return self.left
+
+            min_val = self.right.find_min()
+            self.data = min_val
+            self.right = self.right.delete(min_val)
+
+        return self
+
     def print_tree(self):
         if self is not None:
             print(self.data)
@@ -143,3 +165,5 @@ print(root.tree_search(1000))
 print("Min. in Tree:", root.find_min())
 print("Max. in Tree:", root.find_max())
 print("Sum all elements in Tree:", root.cal_sum())
+root.delete(20)
+root.print_tree()
